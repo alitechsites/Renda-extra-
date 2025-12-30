@@ -3,113 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Fullscreen Background</title>
+    <title>Renda Extra na Prática</title>
     <style>
-        /* 1. RESET E CONFIGURAÇÕES GERAIS */
+        /* --- RESET E ESTRUTURA --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
         }
 
         html {
-            /* Ativa o efeito de "trava" no scroll */
             scroll-snap-type: y mandatory;
             scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: white;
-            overflow-x: hidden;
+            background-color: #000;
+            color: #fff;
         }
 
-        /* 2. ESTRUTURA DAS SEÇÕES */
+        /* --- CONFIGURAÇÃO DAS SEÇÕES --- */
         section {
-            height: 100vh; /* Altura total da tela */
+            height: 100vh;
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            
-            /* Configurações da Imagem de Fundo */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            
-            /* Garante que o scroll pare exatamente aqui */
             scroll-snap-align: start;
+            position: relative;
         }
 
-        /* 3. ESTILO DO CONTEÚDO */
-        .glass-box {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px); /* Efeito de vidro embaçado */
+        /* Camada para garantir legibilidade */
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 850px;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             padding: 40px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            max-width: 80%;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         h1 {
-            font-size: clamp(2rem, 5vw, 4rem); /* Fonte responsiva */
-            margin-bottom: 1rem;
+            font-size: clamp(1.8rem, 6vw, 3.5rem);
+            margin-bottom: 15px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: -1px;
         }
 
         p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        /* 4. IMAGENS POR SEÇÃO (Substitua as URLs pelas suas imagens) */
-        .bg-1 {
-            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-                              url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80');
+        /* --- MAPEAMENTO DE IMAGENS DO GAMMA --- */
+        .sec-1 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/f03e6704044941919864273822f39294/original/ai-generated-8588509_1280.jpg'); }
+        .sec-2 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/07e9999a071c469f9e61298d9333907c/original/person-working-on-laptop-at-home-with-coffee.jpg'); }
+        .sec-3 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/1932688756914c6e98717904071ec294/original/concept-of-investing-and-savings-with-coins-and-plant.jpg'); }
+        .sec-4 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/9859f77c38584857b280146036f01df2/original/startup-meeting-room.jpg'); }
+        .sec-5 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/b1f9b37803734a978f85f190623340f1/original/remote-worker-on-beach.jpg'); }
+        .sec-6 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/6465f12e3e52467795368603666683f2/original/organized-desk-with-planner.jpg'); }
+        .sec-7 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/20050e6871a248f2b1d6836480119421/original/financial-charts-on-tablet.jpg'); }
+        .sec-8 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/896678783614457782352136066223f1/original/group-celebrating-success.jpg'); }
+        .sec-9 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/456678783614457782352136066223f1/original/next-steps-abstract.jpg'); } /* Fallback image */
+
+        /* Indicador visual de progresso */
+        .dots {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
         }
 
-        .bg-2 {
-            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-                              url('https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=1920&q=80');
-        }
-
-        .bg-3 {
-            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-                              url('https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=1920&q=80');
-        }
-
-        /* 5. RESPONSIVIDADE ADICIONAL */
+        /* RESPONSIVIDADE */
         @media (max-width: 768px) {
-            .glass-box {
-                padding: 20px;
-                width: 90%;
-            }
+            .glass { padding: 25px 15px; }
+            section::before { background: rgba(0, 0, 0, 0.6); }
         }
     </style>
 </head>
 <body>
 
-    <section class="bg-1">
-        <div class="glass-box">
-            <h1>Montanhas</h1>
-            <p>Explore a imensidão das alturas.</p>
-        </div>
+    <div class="dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+
+    <section class="sec-1">
+        <div class="content"><div class="glass"><h1>Renda Extra na Prática</h1><p>O início da sua jornada rumo à liberdade financeira.</p></div></div>
     </section>
 
-    <section class="bg-2">
-        <div class="glass-box">
-            <h1>Vales</h1>
-            <p>A tranquilidade da natureza preservada.</p>
-        </div>
+    <section class="sec-2">
+        <div class="content"><div class="glass"><h1>Oportunidades Digitais</h1><p>Trabalhe no conforto da sua casa com ferramentas modernas.</p></div></div>
     </section>
 
-    <section class="bg-3">
-        <div class="glass-box">
-            <h1>Florestas</h1>
-            <p>Onde o ar é puro e o tempo para.</p>
-        </div>
+    <section class="sec-3">
+        <div class="content"><div class="glass"><h1>Mentalidade de Crescimento</h1><p>Pequenos investimentos geram grandes resultados no longo prazo.</p></div></div>
+    </section>
+
+    <section class="sec-4">
+        <div class="content"><div class="glass"><h1>Trabalho em Equipe</h1><p>Conecte-se com pessoas que buscam o mesmo propósito.</p></div></div>
+    </section>
+
+    <section class="sec-5">
+        <div class="content"><div class="glass"><h1>Liberdade Geográfica</h1><p>O mundo é o seu escritório. Defina seu destino.</p></div></div>
+    </section>
+
+    <section class="sec-6">
+        <div class="content"><div class="glass"><h1>Planejamento Estratégico</h1><p>Organize suas metas para maximizar seus ganhos mensais.</p></div></div>
+    </section>
+
+    <section class="sec-7">
+        <div class="content"><div class="glass"><h1>Análise de Resultados</h1><p>Monitore seu progresso com dados e gráficos precisos.</p></div></div>
+    </section>
+
+    <section class="sec-8">
+        <div class="content"><div class="glass"><h1>Comunidade de Sucesso</h1><p>Junte-se a quem já alcançou os resultados que você deseja.</p></div></div>
+    </section>
+
+    <section class="sec-9">
+        <div class="content"><div class="glass"><h1>Próximos Passos</h1><p>A hora de agir é agora. O seu futuro depende das suas escolhas de hoje.</p></div></div>
     </section>
 
 </body>
