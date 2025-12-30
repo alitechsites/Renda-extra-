@@ -1,1 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Fullscreen Background</title>
+    <style>
+        /* 1. RESET E CONFIGURAÇÕES GERAIS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        html {
+            /* Ativa o efeito de "trava" no scroll */
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* 2. ESTRUTURA DAS SEÇÕES */
+        section {
+            height: 100vh; /* Altura total da tela */
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            
+            /* Configurações da Imagem de Fundo */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* Garante que o scroll pare exatamente aqui */
+            scroll-snap-align: start;
+        }
+
+        /* 3. ESTILO DO CONTEÚDO */
+        .glass-box {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px); /* Efeito de vidro embaçado */
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 80%;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 4rem); /* Fonte responsiva */
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* 4. IMAGENS POR SEÇÃO (Substitua as URLs pelas suas imagens) */
+        .bg-1 {
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                              url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80');
+        }
+
+        .bg-2 {
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                              url('https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=1920&q=80');
+        }
+
+        .bg-3 {
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                              url('https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=1920&q=80');
+        }
+
+        /* 5. RESPONSIVIDADE ADICIONAL */
+        @media (max-width: 768px) {
+            .glass-box {
+                padding: 20px;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="bg-1">
+        <div class="glass-box">
+            <h1>Montanhas</h1>
+            <p>Explore a imensidão das alturas.</p>
+        </div>
+    </section>
+
+    <section class="bg-2">
+        <div class="glass-box">
+            <h1>Vales</h1>
+            <p>A tranquilidade da natureza preservada.</p>
+        </div>
+    </section>
+
+    <section class="bg-3">
+        <div class="glass-box">
+            <h1>Florestas</h1>
+            <p>Onde o ar é puro e o tempo para.</p>
+        </div>
+    </section>
+
+</body>
+</html>
