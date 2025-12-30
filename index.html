@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Renda Extra na Prática</title>
     <style>
-        /* --- RESET E ESTRUTURA --- */
+        /* RESET E CONFIGURAÇÕES GERAIS */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
         }
 
         html {
@@ -20,10 +20,10 @@
 
         body {
             background-color: #000;
-            color: #fff;
+            color: white;
         }
 
-        /* --- CONFIGURAÇÃO DAS SEÇÕES --- */
+        /* CONFIGURAÇÃO DE SEÇÃO FULLSCREEN */
         section {
             height: 100vh;
             width: 100%;
@@ -36,124 +36,167 @@
             background-repeat: no-repeat;
             scroll-snap-align: start;
             position: relative;
+            padding: 20px;
         }
 
-        /* Camada para garantir legibilidade */
+        /* MÁSCARA DE LEITURA */
         section::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 1;
         }
 
+        /* CONTEÚDO ESTILIZADO */
         .content {
             position: relative;
             z-index: 2;
-            width: 90%;
-            max-width: 850px;
+            width: 100%;
+            max-width: 800px;
         }
 
         .glass {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            padding: 40px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        h1 {
-            font-size: clamp(1.8rem, 6vw, 3.5rem);
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-        }
+        h1 { font-size: clamp(1.8rem, 6vw, 3rem); margin-bottom: 15px; color: #ffcc00; text-transform: uppercase; }
+        h2 { font-size: clamp(1.4rem, 4vw, 2.2rem); margin-bottom: 15px; color: #ffcc00; }
+        p { font-size: clamp(1rem, 2.5vw, 1.2rem); line-height: 1.5; margin-bottom: 10px; }
+        ul { list-style: none; margin-top: 10px; }
+        li { margin-bottom: 8px; font-size: 1.1rem; }
+        .highlight { color: #ffcc00; font-weight: bold; }
 
-        p {
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        /* --- MAPEAMENTO DE IMAGENS DO GAMMA --- */
-        .sec-1 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/f03e6704044941919864273822f39294/original/ai-generated-8588509_1280.jpg'); }
-        .sec-2 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/07e9999a071c469f9e61298d9333907c/original/person-working-on-laptop-at-home-with-coffee.jpg'); }
-        .sec-3 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/1932688756914c6e98717904071ec294/original/concept-of-investing-and-savings-with-coins-and-plant.jpg'); }
-        .sec-4 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/9859f77c38584857b280146036f01df2/original/startup-meeting-room.jpg'); }
-        .sec-5 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/b1f9b37803734a978f85f190623340f1/original/remote-worker-on-beach.jpg'); }
-        .sec-6 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/6465f12e3e52467795368603666683f2/original/organized-desk-with-planner.jpg'); }
-        .sec-7 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/20050e6871a248f2b1d6836480119421/original/financial-charts-on-tablet.jpg'); }
-        .sec-8 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/896678783614457782352136066223f1/original/group-celebrating-success.jpg'); }
-        .sec-9 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/456678783614457782352136066223f1/original/next-steps-abstract.jpg'); } /* Fallback image */
-
-        /* Indicador visual de progresso */
-        .dots {
-            position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .dot {
-            width: 8px;
-            height: 8px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-        }
+        /* MAPEAMENTO DE IMAGENS DO GAMMA */
+        .s1 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/f03e6704044941919864273822f39294/original/ai-generated-8588509_1280.jpg'); }
+        .s2 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/07e9999a071c469f9e61298d9333907c/original/person-working-on-laptop-at-home-with-coffee.jpg'); }
+        .s3 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/1932688756914c6e98717904071ec294/original/concept-of-investing-and-savings-with-coins-and-plant.jpg'); }
+        .s4 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/9859f77c38584857b280146036f01df2/original/startup-meeting-room.jpg'); }
+        .s5 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/b1f9b37803734a978f85f190623340f1/original/remote-worker-on-beach.jpg'); }
+        .s6 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/6465f12e3e52467795368603666683f2/original/organized-desk-with-planner.jpg'); }
+        .s7 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/20050e6871a248f2b1d6836480119421/original/financial-charts-on-tablet.jpg'); }
+        .s8 { background-image: url('https://files.gamma.app/r002clp6j82f4i8/896678783614457782352136066223f1/original/group-celebrating-success.jpg'); }
+        .s9 { background-image: url('https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&w=1920&q=80'); }
 
         /* RESPONSIVIDADE */
         @media (max-width: 768px) {
-            .glass { padding: 25px 15px; }
-            section::before { background: rgba(0, 0, 0, 0.6); }
+            .glass { padding: 20px; }
+            h1 { font-size: 1.8rem; }
+            p { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="dots">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-    </div>
-
-    <section class="sec-1">
-        <div class="content"><div class="glass"><h1>Renda Extra na Prática</h1><p>O início da sua jornada rumo à liberdade financeira.</p></div></div>
+    <section class="s1">
+        <div class="content">
+            <div class="glass">
+                <h1>RENDA EXTRA NA PRÁTICA</h1>
+                <p>Um guia simples e real para começar do zero usando apenas o celular.</p>
+                <p class="highlight">Gere dinheiro de forma honesta, acessível e gradual.</p>
+            </div>
+        </div>
     </section>
 
-    <section class="sec-2">
-        <div class="content"><div class="glass"><h1>Oportunidades Digitais</h1><p>Trabalhe no conforto da sua casa com ferramentas modernas.</p></div></div>
+    <section class="s2">
+        <div class="content">
+            <div class="glass">
+                <h2>Seu dinheiro acaba antes do mês?</h2>
+                <p>As contas acumulam e o salário não acompanha o custo de vida?</p>
+                <p class="highlight">A boa notícia: é possível gerar renda começando do zero.</p>
+                <p>Sem fórmulas mágicas, apenas método e ação.</p>
+            </div>
+        </div>
     </section>
 
-    <section class="sec-3">
-        <div class="content"><div class="glass"><h1>Mentalidade de Crescimento</h1><p>Pequenos investimentos geram grandes resultados no longo prazo.</p></div></div>
+    <section class="s3">
+        <div class="content">
+            <div class="glass">
+                <h2>Mentalidade Correta</h2>
+                <p>Renda extra não é ficar rico rápido. É resolver problemas e trocar habilidade por dinheiro.</p>
+                <ul>
+                    <li>✅ Começar pequeno</li>
+                    <li>✅ Aprender fazendo</li>
+                    <li>✅ Melhorar todo dia</li>
+                </ul>
+            </div>
+        </div>
     </section>
 
-    <section class="sec-4">
-        <div class="content"><div class="glass"><h1>Trabalho em Equipe</h1><p>Conecte-se com pessoas que buscam o mesmo propósito.</p></div></div>
+    <section class="s4">
+        <div class="content">
+            <div class="glass">
+                <h2>❌ Erros que te travam</h2>
+                <ul>
+                    <li>1. Querer resultado imediato</li>
+                    <li>2. Pular de ideia em ideia</li>
+                    <li>3. Aprender e não agir</li>
+                    <li>4. Acreditar em promessas falsas</li>
+                </ul>
+            </div>
+        </div>
     </section>
 
-    <section class="sec-5">
-        <div class="content"><div class="glass"><h1>Liberdade Geográfica</h1><p>O mundo é o seu escritório. Defina seu destino.</p></div></div>
+    <section class="s5">
+        <div class="content">
+            <div class="glass">
+                <h2>Expectativa x Realidade</h2>
+                <p><span class="highlight">Expectativa:</span> R$ 5.000 no 1º mês.</p>
+                <p><span class="highlight">Realidade:</span> Seus primeiros R$ 100 e escalar depois.</p>
+                <p>É simples, mas exige constância diária.</p>
+            </div>
+        </div>
     </section>
 
-    <section class="sec-6">
-        <div class="content"><div class="glass"><h1>Planejamento Estratégico</h1><p>Organize suas metas para maximizar seus ganhos mensais.</p></div></div>
+    <section class="s6">
+        <div class="content">
+            <div class="glass">
+                <h2>Opções de Ganhos</h2>
+                <p><span class="highlight">1. Serviços Digitais:</span> Digitação, posts e atendimento. (R$500 - R$2.000)</p>
+                <p><span class="highlight">2. Afiliados:</span> Indique produtos e ganhe comissão. (R$100 - R$3.000)</p>
+            </div>
+        </div>
     </section>
 
-    <section class="sec-7">
-        <div class="content"><div class="glass"><h1>Análise de Resultados</h1><p>Monitore seu progresso com dados e gráficos precisos.</p></div></div>
+    <section class="s7">
+        <div class="content">
+            <div class="glass">
+                <h2>Vendas e I.A.</h2>
+                <p><span class="highlight">3. Vendas Online:</span> Shopee e Mercado Livre. (Sem estoque)</p>
+                <p><span class="highlight">4. Inteligência Artificial:</span> Use IA para criar textos e currículos.</p>
+                <p>Ganhos entre <span class="highlight">R$ 500 a R$ 3.000.</span></p>
+            </div>
+        </div>
     </section>
 
-    <section class="sec-8">
-        <div class="content"><div class="glass"><h1>Comunidade de Sucesso</h1><p>Junte-se a quem já alcançou os resultados que você deseja.</p></div></div>
+    <section class="s8">
+        <div class="content">
+            <div class="glass">
+                <h2>Plano Prático 30 Dias</h2>
+                <ul>
+                    <li>📅 Sem 1: Preparação e escolha</li>
+                    <li>📅 Sem 2: Execução diária (60 min)</li>
+                    <li>📅 Sem 3: Ajustar erros</li>
+                    <li>📅 Sem 4: Focar no que deu dinheiro</li>
+                </ul>
+            </div>
+        </div>
     </section>
 
-    <section class="sec-9">
-        <div class="content"><div class="glass"><h1>Próximos Passos</h1><p>A hora de agir é agora. O seu futuro depende das suas escolhas de hoje.</p></div></div>
+    <section class="s9">
+        <div class="content">
+            <div class="glass">
+                <h2>O momento é AGORA</h2>
+                <p>Renda extra não muda sua vida da noite para o dia, mas muda sua direção.</p>
+                <h2 style="color: #00ff00;">🚀 COMECE HOJE</h2>
+                <p>Escolha UMA forma e execute por 30 dias.</p>
+            </div>
+        </div>
     </section>
 
 </body>
