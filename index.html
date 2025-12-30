@@ -3,186 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso: Renda Extra na Prática</title>
+    <title>Curso Aberto: Renda Extra na Prática</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
         :root {
-            --sidebar-width: 300px;
+            --sidebar-width: 320px;
             --primary: #2563eb;
-            --bg-body: #f1f5f9;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
+            --bg-body: #f8fafc;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
             --white: #ffffff;
             --border: #e2e8f0;
+            --accent-bg: #f1f5f9;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; }
 
-        /* --- Header / Barra Superior --- */
-        .top-nav {
-            height: 60px;
+        /* --- Barra Superior --- */
+        .top-header {
+            height: 70px;
             background: var(--white);
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            justify-content: space-between;
             padding: 0 2rem;
             position: sticky;
             top: 0;
             z-index: 100;
         }
-        .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
-        .user-progress { font-size: 0.9rem; color: var(--text-muted); }
+        .logo { font-weight: 700; color: var(--primary); font-size: 1.3rem; letter-spacing: -0.5px; }
+        .course-badge { background: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; margin-left: 15px; }
 
-        /* --- Layout Principal --- */
-        .main-wrapper { display: flex; flex: 1; }
+        /* --- Layout --- */
+        .main-container { display: flex; flex: 1; }
 
-        /* --- Sidebar (Índice do Curso) --- */
+        /* --- Menu Lateral (Tudo Desbloqueado) --- */
         .sidebar {
             width: var(--sidebar-width);
             background: var(--white);
             border-right: 1px solid var(--border);
-            height: calc(100vh - 60px);
+            height: calc(100vh - 70px);
             position: sticky;
-            top: 60px;
+            top: 70px;
             overflow-y: auto;
             padding: 1.5rem 0;
         }
-        .sidebar-title { padding: 0 1.5rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 1rem; }
-        .module-link { 
+        .sidebar-label { padding: 0 1.5rem; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); margin-bottom: 1rem; }
+        .nav-item { 
             display: flex; 
             align-items: center; 
-            padding: 0.75rem 1.5rem; 
+            padding: 0.8rem 1.5rem; 
             text-decoration: none; 
             color: var(--text-dark); 
-            font-size: 0.95rem; 
-            transition: 0.2s; 
-            border-left: 3px solid transparent;
+            font-size: 0.9rem; 
+            transition: all 0.2s; 
+            border-left: 4px solid transparent;
         }
-        .module-link:hover { background: #f8fafc; }
-        .module-link.active { background: #eff6ff; color: var(--primary); border-left-color: var(--primary); font-weight: 500; }
-        .module-link i { margin-right: 12px; font-size: 1rem; width: 20px; text-align: center; }
+        .nav-item:hover { background: var(--accent-bg); }
+        .nav-item.active { background: #eff6ff; color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
+        .nav-item i { margin-right: 12px; width: 18px; color: var(--primary); }
 
-        /* --- Conteúdo da Aula --- */
-        .content { flex: 1; padding: 2rem; max-width: 900px; margin: 0 auto; }
-        .lesson-header { margin-bottom: 2rem; }
-        .lesson-header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-        .lesson-meta { color: var(--text-muted); font-size: 0.9rem; }
-
-        .video-placeholder {
+        /* --- Conteúdo Principal --- */
+        .main-content { flex: 1; padding: 3rem 2rem; max-width: 900px; margin: 0 auto; }
+        
+        .hero-image {
             width: 100%;
-            aspect-ratio: 16 / 9;
-            background: #000;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-image: url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            position: relative;
-            cursor: pointer;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
-        .play-btn { font-size: 4rem; color: white; opacity: 0.8; transition: 0.3s; }
-        .video-placeholder:hover .play-btn { transform: scale(1.1); opacity: 1; }
 
-        .article-body { background: var(--white); padding: 2.5rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); line-height: 1.8; }
-        .article-body h2 { margin: 2rem 0 1rem; font-size: 1.5rem; }
-        .article-body p { margin-bottom: 1.2rem; font-size: 1.1rem; }
+        .lesson-card { background: var(--white); padding: 3rem; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .lesson-card h1 { font-size: 2.2rem; margin-bottom: 1rem; letter-spacing: -1px; }
+        .lesson-card p { font-size: 1.15rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 1.5rem; }
+        .lesson-card h2 { font-size: 1.5rem; margin: 2.5rem 0 1rem; color: var(--text-dark); }
+        
+        .highlight-box {
+            background: #fdf2f8;
+            border-left: 4px solid #db2777;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
 
-        /* --- Navegação de Aula --- */
-        .lesson-footer {
+        /* --- Botões de Navegação --- */
+        .action-footer {
             display: flex;
             justify-content: space-between;
             margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
         }
-        .nav-btn {
-            padding: 12px 24px;
-            border-radius: 8px;
+        .btn-nav {
+            padding: 14px 28px;
+            border-radius: 10px;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.95rem;
             transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .prev { color: var(--text-dark); border: 1px solid var(--border); }
-        .next { background: var(--primary); color: white; }
-        .next:hover { opacity: 0.9; }
+        .btn-prev { color: var(--text-dark); border: 1px solid var(--border); background: var(--white); }
+        .btn-next { background: var(--primary); color: var(--white); }
+        .btn-nav:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
-        /* --- Responsividade --- */
+        /* Mobile */
         @media (max-width: 1024px) {
             .sidebar { display: none; }
-            .top-nav { padding: 0 1rem; }
+            .main-content { padding: 1.5rem; }
+            .lesson-card { padding: 1.5rem; }
+            .hero-image { height: 200px; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="top-nav">
-        <div class="logo">RENDA EXTRA <span style="font-weight: 300;">PRO</span></div>
-        <div class="user-progress">
-            <i class="fas fa-tasks"></i> Módulo 1 de 10 concluído
-        </div>
-    </nav>
+    <header class="top-header">
+        <div class="logo">RENDA EXTRA <span style="font-weight: 300;">CURSO</span></div>
+        <span class="course-badge">CONTEÚDO LIBERADO</span>
+    </header>
 
-    <div class="main-wrapper">
+    <div class="main-container">
         <aside class="sidebar">
-            <p class="sidebar-title">Conteúdo do Curso</p>
-            <a href="#" class="module-link active"><i class="fas fa-play-circle"></i> 01. Mentalidade Correta</a>
-            <a href="#" class="module-link"><i class="fas fa-lock"></i> 02. Expectativa x Realidade</a>
-            <a href="#" class="module-link"><i class="fas fa-lock"></i> 03. Identificando Ativos</a>
-            <a href="#" class="module-link"><i class="fas fa-lock"></i> 04. Freelancer Digital</a>
-            <a href="#" class="module-link"><i class="fas fa-lock"></i> 05. Desapego Lucrativo</a>
-            <a href="#" class="module-link"><i class="fas fa-lock"></i> 06. Serviços Locais</a>
-            <a href="#" class="module-link"><i class="fas fa-lock"></i> 07. Mercado de Afiliados</a>
-            <a href="#" class="module-link"><i class="fas fa-lock"></i> 08. Microtarefas Online</a>
-            <a href="#" class="module-link"><i class="fas fa-lock"></i> 09. Plano de 30 Dias</a>
-            <a href="#" class="module-link"><i class="fas fa-lock"></i> 10. Próximos Passos</a>
+            <p class="sidebar-label">Aulas do Curso</p>
+            <a href="#aula1" class="nav-item active"><i class="fas fa-check-circle"></i> 01. Mentalidade</a>
+            <a href="#aula2" class="nav-item"><i class="fas fa-check-circle"></i> 02. Expectativa x Realidade</a>
+            <a href="#aula3" class="nav-item"><i class="fas fa-check-circle"></i> 03. Identificando Ativos</a>
+            <a href="#aula4" class="nav-item"><i class="fas fa-check-circle"></i> 04. Freelancer Digital</a>
+            <a href="#aula5" class="nav-item"><i class="fas fa-check-circle"></i> 05. Desapego Lucrativo</a>
+            <a href="#aula6" class="nav-item"><i class="fas fa-check-circle"></i> 06. Serviços Locais</a>
+            <a href="#aula7" class="nav-item"><i class="fas fa-check-circle"></i> 07. Mercado de Afiliados</a>
+            <a href="#aula8" class="nav-item"><i class="fas fa-check-circle"></i> 08. Microtarefas Online</a>
+            <a href="#aula9" class="nav-item"><i class="fas fa-check-circle"></i> 09. Plano de 30 Dias</a>
+            <a href="#aula10" class="nav-item"><i class="fas fa-check-circle"></i> 10. Conclusão Final</a>
         </aside>
 
-        <main class="content">
-            <div class="lesson-header">
-                <span style="color: var(--primary); font-weight: 600; font-size: 0.8rem;">MÓDULO 01</span>
+        <main class="main-content">
+            
+            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=80" alt="Estudos e Planejamento" class="hero-image">
+
+            <div class="lesson-card">
+                <span style="color: var(--primary); font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Módulo 01</span>
                 <h1>Mentalidade: O Dinheiro é uma Troca de Valor</h1>
-                <div class="lesson-meta">Tempo estimado: 12 min • Nível: Iniciante</div>
-            </div>
-
-            <div class="video-placeholder">
-                <i class="fas fa-play-circle play-btn"></i>
-            </div>
-
-            <article class="article-body">
-                <h2>O que você aprenderá nesta aula?</h2>
-                <p>Nesta primeira aula do nosso treinamento, vamos desconstruir a ideia de que o dinheiro "cai do céu". Para gerar renda extra de forma consistente, você precisa entender a psicologia do mercado.</p>
                 
-                <p><strong>Conceito Chave:</strong> O mercado não paga pelo seu tempo, ele paga pelo <strong>valor</strong> que você entrega. Se você gasta 10 horas fazendo algo que ninguém precisa, seu lucro será zero. Se você gasta 10 minutos resolvendo um problema crítico de alguém, você pode cobrar caro por isso.</p>
+                <p>Muitas pessoas começam a busca por renda extra com a mentalidade errada. Elas buscam por "atalhos", "esquemas" ou "sorte". No entanto, o mercado financeiro — seja ele digital ou físico — opera sob uma regra imutável: a <strong>Lei da Troca</strong>.</p>
 
-                <blockquote style="border-left: 4px solid var(--primary); padding-left: 20px; font-style: italic; color: var(--text-muted); margin: 2rem 0;">
-                    "Renda extra não é sobre sorte. É sobre identificar uma necessidade e se posicionar como a solução."
-                </blockquote>
+                <div class="highlight-box">
+                    <strong>Ponto Importante:</strong> Dinheiro nada mais é do que um recibo de que você foi útil para alguém. Se você quer ganhar mais, precisa descobrir como ser mais útil para mais pessoas.
+                </div>
 
-                <h2>A Mudança de Chave</h2>
-                <p>A partir de agora, pare de se perguntar: "Como posso ganhar dinheiro?". <br>
-                   Comece a se perguntar: <strong>"Quem eu posso ajudar hoje e qual problema eu sei resolver?"</strong>.</p>
-                
-                <p>Ao longo deste curso, vamos passar por 9 formas práticas de aplicar essa mentalidade. Prepare seu papel e caneta, e vamos para a próxima lição.</p>
-            </article>
+                <h2>O Fim do Pensamento de "Empregado"</h2>
+                <p>No trabalho tradicional, você troca horas por salário. Na renda extra, você troca <strong>resultados</strong> por lucro. Isso significa que a produtividade é sua melhor amiga. Se você aprender a fazer em 1 hora o que outros levam 4, você acabou de quadruplicar seu valor de mercado.</p>
 
-            <div class="lesson-footer">
-                <a href="#" class="nav-btn prev">Voltar</a>
-                <a href="#" class="nav-btn next">Próxima Aula <i class="fas fa-arrow-right"></i></a>
+                <h2>Exercício de Reflexão</h2>
+                <p>Antes de passar para a próxima aula, pegue um papel e responda: <em>"Quais problemas eu sei resolver hoje que alguém estaria disposto a pagar R$ 50 para ter a solução?"</em>. Pode ser algo simples como traduzir um e-mail, organizar uma planilha ou passear com um cachorro.</p>
+
+                <div class="action-footer">
+                    <a href="#" class="btn-nav btn-prev"><i class="fas fa-chevron-left"></i> Anterior</a>
+                    <a href="#" class="btn-nav btn-next">Próxima Aula <i class="fas fa-chevron-right"></i></a>
+                </div>
             </div>
+            
+            <footer style="margin-top: 4rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; padding-bottom: 2rem;">
+                © 2025 Renda Extra Pro - Plataforma de Ensino Livre.
+            </footer>
         </main>
     </div>
-
-    <script>
-        // Este script pode ser usado para marcar aulas como lidas ou trocar de conteúdo
-        console.log("Plataforma de curso carregada com sucesso.");
-    </script>
 
 </body>
 </html>
