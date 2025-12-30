@@ -3,177 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso: Renda Extra na Prática</title>
+    <title>Plataforma Renda Extra na Prática</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
         :root {
-            --sidebar-width: 300px;
             --primary: #2563eb;
+            --secondary: #0f172a;
             --bg: #f8fafc;
             --white: #ffffff;
-            --text: #1e293b;
+            --text: #334155;
             --border: #e2e8f0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
 
-        /* --- Sidebar --- */
+        /* Progress Bar */
+        .progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 6px; background: #e2e8f0; z-index: 1000; }
+        #progress-bar { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; }
+
+        /* Layout */
+        .app-container { display: flex; min-height: 100vh; }
+
         .sidebar {
-            width: var(--sidebar-width);
+            width: 320px;
             background: var(--white);
             border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
         }
-        .sidebar-header { padding: 20px; border-bottom: 1px solid var(--border); font-weight: 700; color: var(--primary); font-size: 1.2rem; }
-        .sidebar-menu { flex: 1; overflow-y: auto; padding: 10px 0; }
+
+        .sidebar-header { padding: 0 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+        .sidebar-header h2 { font-size: 1.2rem; color: var(--secondary); }
+
         .nav-item {
+            padding: 15px 20px;
             display: flex;
             align-items: center;
-            padding: 12px 20px;
-            text-decoration: none;
-            color: var(--text);
-            font-size: 0.9rem;
             cursor: pointer;
             transition: 0.2s;
             border-left: 4px solid transparent;
+            font-size: 0.9rem;
+            color: var(--text);
         }
         .nav-item:hover { background: #f1f5f9; }
         .nav-item.active { background: #eff6ff; color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
-        .nav-item i { margin-right: 12px; width: 18px; }
+        .nav-item i { margin-right: 12px; }
 
-        /* --- Conteúdo --- */
-        .main-content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
-        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; width: 100%; }
-        
-        .lesson-img { width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 30px; }
-        .lesson-content { background: var(--white); padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .lesson-content h1 { font-size: 2rem; margin-bottom: 20px; }
-        .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #475569; font-size: 1.1rem; }
-        
-        /* --- Botões --- */
-        .footer-nav { display: flex; justify-content: space-between; margin-top: 30px; }
-        .btn { padding: 12px 25px; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; transition: 0.2s; border: none; }
-        .btn-prev { background: #e2e8f0; color: var(--text); }
+        .main-content { flex: 1; padding: 60px 20px; display: flex; justify-content: center; }
+        .content-card { max-width: 850px; width: 100%; background: var(--white); padding: 50px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+
+        .lesson-img { width: 100%; height: 350px; object-fit: cover; border-radius: 12px; margin-bottom: 30px; }
+        .lesson-tag { color: var(--primary); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        h1 { font-size: 2.2rem; color: var(--secondary); margin: 10px 0 25px; line-height: 1.2; }
+        .lesson-text p { margin-bottom: 20px; font-size: 1.1rem; text-align: justify; }
+
+        .navigation-btns { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--border); }
+        .btn { padding: 14px 28px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; transition: 0.3s; font-size: 1rem; }
+        .btn-prev { background: #f1f5f9; color: var(--text); }
         .btn-next { background: var(--primary); color: white; }
+        .btn:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.1); }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .sidebar { display: none; }
+            .content-card { padding: 30px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="sidebar-header">Renda Extra Pro</div>
-        <div class="sidebar-menu" id="menu">
-            </div>
-    </aside>
+    <div class="progress-container"><div id="progress-bar"></div></div>
 
-    <main class="main-content">
-        <div class="container">
-            <img id="lesson-img" src="" alt="Aula" class="lesson-img">
-            <div class="lesson-content">
-                <span id="lesson-module" style="color: var(--primary); font-weight: 700; font-size: 0.8rem;"></span>
-                <h1 id="lesson-title"></h1>
-                <div id="lesson-text"></div>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Renda Extra na Prática</h2>
+                <p style="font-size: 0.8rem; color: #64748b;">Curso Gratuito Completo</p>
             </div>
+            <div id="lesson-menu"></div>
+        </aside>
 
-            <div class="footer-nav">
-                <button class="btn btn-prev" onclick="changeLesson(currentIdx - 1)" id="btn-prev">Anterior</button>
-                <button class="btn btn-next" onclick="changeLesson(currentIdx + 1)" id="btn-next">Próxima Aula</button>
+        <main class="main-content">
+            <div class="content-card">
+                <img id="display-img" src="" alt="Aula" class="lesson-img">
+                <span id="display-tag" class="lesson-tag"></span>
+                <h1 id="display-title"></h1>
+                <div id="display-text" class="lesson-text"></div>
+
+                <div class="navigation-btns">
+                    <button class="btn btn-prev" id="prev-btn" onclick="moveLesson(-1)">Anterior</button>
+                    <button class="btn btn-next" id="next-btn" onclick="moveLesson(1)">Próxima Aula</button>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
     <script>
-        const lessons = [
+        const courseData = [
             {
-                title: "Mentalidade: Troca de Valor",
-                img: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80",
-                text: "<p>O dinheiro é um recibo de utilidade. Para ganhar mais, você precisa resolver problemas de mais pessoas ou problemas mais complexos.</p><p>Pare de vender apenas horas e comece a vender soluções.</p>"
+                title: "A Psicologia do Valor e da Troca",
+                img: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1000&q=80",
+                content: `<p>Para começar qualquer jornada de renda extra, você deve primeiro desconstruir a ideia de que dinheiro é algo que você "recebe" pelo seu tempo. O mercado financeiro é regido pela Lei da Troca de Valor. Se você quer ganhar mais, precisa descobrir como ser mais útil para as pessoas ou como resolver problemas mais complexos. Muitas pessoas falham porque focam apenas no valor que querem receber, e não no valor que podem entregar.</p>
+                <p>Imagine o dinheiro como um recibo social. Quando você resolve a dor de alguém, você recebe esse recibo. Portanto, o primeiro passo não é procurar um "esquema" de ganho rápido, mas sim auditar suas habilidades atuais. O que você sabe fazer hoje que economizaria tempo ou dinheiro de outra pessoa? Essa mudança de mentalidade é o que separa os amadores dos profissionais que conseguem escalar seus ganhos mensais de forma honesta e sustentável ao longo do tempo.</p>
+                <p>Nesta introdução, seu objetivo é parar de pensar como um empregado que espera uma tarefa e começar a pensar como um solucionador de problemas. A proatividade é sua maior ferramenta. Ao identificar uma demanda não atendida no seu círculo social ou na internet, você encontra uma oportunidade de monetização imediata.</p>`
             },
             {
-                title: "Expectativa x Realidade",
-                img: "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?auto=format&fit=crop&w=800&q=80",
-                text: "<p>No início, os ganhos são pequenos. O segredo é a consistência. Não espere ficar rico no primeiro mês, espere aprender a base que te sustentará no futuro.</p>"
+                title: "Expectativa Realista e o Jogo da Escala",
+                img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80",
+                content: `<p>Um dos maiores erros dos iniciantes é o imediatismo. Vivemos em uma era de promessas de "ganhos fáceis" que distorcem a realidade. A verdade é que a renda extra começa pequena. No primeiro mês, seu objetivo não deve ser faturar mil reais, mas sim validar seu método e ganhar seus primeiros cinquenta reais. Esse primeiro valor é a prova de conceito de que você é capaz de gerar riqueza fora do seu emprego convencional.</p>
+                <p>Entenda o conceito de "Juros Compostos de Conhecimento". No início, você levará muito tempo para ganhar pouco porque ainda está aprendendo as ferramentas e processos. Com o tempo, você se torna mais eficiente. O que antes levava 5 horas para ser feito, passará a ser feito em 1 hora. Isso aumenta sua margem de lucro sem que você precise trabalhar mais. A realidade da renda extra é uma curva: ela começa plana e quase invisível, mas se torna exponencial com a consistência.</p>
+                <p>Não desanime se os resultados forem lentos nas primeiras semanas. O foco deve ser no processo e na construção de reputação. No mundo digital, sua credibilidade e suas avaliações valem tanto quanto o dinheiro em si, pois são elas que permitirão que você cobre mais caro no futuro próximo.</p>`
             },
             {
-                title: "Identificando Seus Ativos",
-                img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=80",
-                text: "<p>O que você já sabe fazer? Escrever, desenhar, organizar, falar idiomas? Sua maior fonte de renda extra está no que você já faz bem.</p>"
+                title: "Auditoria de Talentos: O Que Você Já Tem?",
+                img: "https://images.unsplash.com/photo-1454165833767-027ffea9e77b?auto=format&fit=crop&w=1000&q=80",
+                content: `<p>Você não precisa de uma nova faculdade para começar. A maioria das pessoas ignora os ativos que já possui. Ativo é tudo aquilo que você sabe ou tem e que pode ser monetizado. Faça uma lista honesta: você escreve bem? Domina o Excel? Sabe configurar redes sociais? Fala um segundo idioma, mesmo que básico? Tem facilidade em organizar agendas ou planilhas financeiras? Tudo isso é altamente demandado por pequenos empreendedores que não têm tempo para essas tarefas.</p>
+                <p>Além das habilidades intelectuais, considere seus ativos físicos. Você tem uma câmera boa? Um computador rápido? Uma sala vazia ou ferramentas de manutenção? O segredo da renda extra rápida é olhar para o que está parado e colocar para trabalhar. Muitas vezes, a solução está em combinar dois talentos: por exemplo, se você gosta de pets e tem horários flexíveis, pode se tornar um passeador profissional com gestão digital de clientes.</p>
+                <p>O mercado de micro-serviços está explodindo justamente porque empresas maiores estão terceirizando tarefas pequenas. Identificar onde suas habilidades se encaixam nessas lacunas é o que chamamos de "encontrar seu nicho inicial". Não tente ser tudo para todos; escolha uma habilidade e especialize-se nela até se tornar a referência do seu grupo.</p>`
             },
             {
-                title: "Freelancer Digital",
-                img: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80",
-                text: "<p>Plataformas como Workana e Fiverr conectam você ao mundo. Envie propostas claras e mostre resultados anteriores, mesmo que sejam projetos pessoais.</p>"
+                title: "Dominando o Mundo Freelancer",
+                img: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1000&q=80",
+                content: `<p>As plataformas de freelancing como Workana, 99Freelas e Fiverr são os maiores marketplaces de trabalho do mundo. No entanto, a maioria das pessoas cria um perfil e nunca recebe um chamado. O segredo está na proposta. Ao se candidatar a um projeto, não fale sobre você; fale sobre como você vai resolver o problema do cliente. Demonstre que você leu a descrição do projeto e ofereça uma solução clara e rápida.</p>
+                <p>Construir um portfólio é essencial. Se você não tem clientes ainda, crie projetos fictícios. Se quer ser redator, escreva 5 artigos de alta qualidade sobre temas diferentes e poste em um blog gratuito. Se quer ser designer, refaça logotipos de empresas conhecidas. O cliente quer ver prova social e competência técnica, não apenas um currículo longo. No início, aceite projetos menores para ganhar avaliações positivas de 5 estrelas.</p>
+                <p>Gerir seu tempo como freelancer é o maior desafio. Trate sua renda extra como um segundo emprego sério, com horários definidos. Separe pelo menos 1 a 2 horas por dia focado exclusivamente em prospecção ou execução. A disciplina de sentar e trabalhar, mesmo sem supervisão, é o que define quem terá sucesso real nesse mercado competitivo.</p>`
             },
             {
-                title: "O Poder do Desapego",
-                img: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=800&q=80",
-                text: "<p>Venda o que não usa. É a forma mais rápida de levantar capital. Use boas fotos e descrições honestas no Marketplace do Facebook e OLX.</p>"
+                title: "Desapego e Arbitragem de Produtos",
+                img: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=1000&q=80",
+                content: `<p>A forma mais rápida de colocar dinheiro no bolso em menos de 48 horas é a venda de itens usados. Quase todo mundo tem pelo menos R$ 500,00 parados em eletrônicos, roupas ou móveis que não usa mais. A estratégia aqui é técnica: fotos com iluminação natural, títulos com palavras-chave que as pessoas buscam e descrições detalhadas que sanem todas as dúvidas do comprador. Use marketplaces como OLX e Facebook para vendas locais e Enjoei para vestuário.</p>
+                <p>Uma vez que você aprende a vender seus próprios itens, pode passar para a arbitragem. Isso consiste em comprar itens baratos (em bazares, leilões ou queimas de estoque) e revendê-los pelo preço de mercado. É o comércio em sua forma mais pura. Muitos empreendedores começaram comprando um item usado, limpando-o, tirando fotos profissionais e revendendo com 50% de lucro no mesmo dia.</p>
+                <p>O foco aqui é o fluxo de caixa. O dinheiro parado em um objeto não rende nada; o dinheiro circulando permite que você compre novos ativos e escale seu pequeno negócio. Aprender a negociar, lidar com objeções de preço e fechar vendas é uma habilidade que você levará para qualquer outra área da sua vida financeira.</p>`
             },
             {
-                title: "Serviços Locais",
-                img: "https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?auto=format&fit=crop&w=800&q=80",
-                text: "<p>Dog walking, personal organizer ou gestão de redes sociais para lojas do bairro. O offline ainda é uma mina de ouro para renda rápida.</p>"
+                title: "Prestação de Serviços na sua Região",
+                img: "https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?auto=format&fit=crop&w=1000&q=80",
+                content: `<p>Nem tudo acontece na internet. Existe uma demanda gigantesca por serviços manuais ou de assistência na sua própria vizinhança. Serviços como cuidados com jardins, organização de closets (personal organizer), pequenos reparos domésticos ou até mesmo auxílio para idosos com tecnologia são extremamente rentáveis. Muitas vezes, as pessoas preferem contratar alguém de confiança que mora perto do que uma empresa desconhecida.</p>
+                <p>Para escalar isso, use o marketing de guerrilha: grupos de WhatsApp do condomínio, cartazes em padarias locais e, principalmente, o boca a boca. Ofereça um serviço excepcional para o primeiro cliente e peça para ele te indicar para mais dois. Em pouco tempo, você terá uma agenda cheia apenas com indicações locais. A vantagem aqui é a ausência de taxas de plataformas e o recebimento imediato via PIX.</p>
+                <p>Lembre-se da apresentação pessoal e da pontualidade. Em serviços locais, a confiança é o produto principal. Ser alguém que chega no horário, resolve o problema sem sujeira e é educado te coloca à frente de 90% da concorrência que costuma ser desorganizada e pouco profissional.</p>`
             },
             {
-                title: "Afiliados na Prática",
-                img: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80",
-                text: "<p>Indique produtos que resolvem dores. Use o conteúdo para educar o público antes de tentar vender diretamente.</p>"
+                title: "O Mercado de Afiliados e Parcerias",
+                img: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1000&q=80",
+                content: `<p>Ser um afiliado significa receber uma comissão por indicar o produto de outra pessoa ou empresa. É o modelo ideal para quem não quer criar um produto do zero ou lidar com estoque. No entanto, esqueça a estratégia de "spam" em grupos de Facebook. O afiliado profissional trabalha com indicação baseada em autoridade ou auxílio. Se você indica um livro ou um curso que realmente ajuda alguém, a venda é uma consequência natural da sua ajuda.</p>
+                <p>As melhores plataformas hoje são Hotmart, Eduzz, Amazon Associados e Shopee Afiliados. Escolha produtos que tenham a ver com o que você já fala ou gosta. Se você entende de cozinha, pode indicar utensílios ou cursos de culinária. A chave é a curadoria: não indique qualquer coisa apenas pela comissão, pois se o produto for ruim, sua reputação será destruída. O lucro vem da confiança que seu público tem em você.</p>
+                <p>Use as redes sociais de forma estratégica. Crie vídeos curtos (Reels ou TikTok) mostrando os benefícios do produto na prática, tirando dúvidas comuns ou fazendo comparativos. O marketing de conteúdo é o motor que gera vendas de forma passiva enquanto você dorme ou faz outras tarefas de renda extra.</p>`
             },
             {
-                title: "Microtarefas Online",
-                img: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=800&q=80",
-                text: "<p>Sites como Amazon MTurk ou Clickworker pagam por tarefas simples. É ideal para ocupar o tempo morto e gerar alguns dólares extras.</p>"
+                title: "Microtarefas e Pesquisas Remuneradas",
+                img: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=1000&q=80",
+                content: `<p>As microtarefas são ideais para quem tem pouco tempo e quer algo extremamente simples. Empresas como Amazon Mechanical Turk, Clickworker e Appen pagam para que humanos realizem tarefas que a inteligência artificial ainda não consegue fazer bem, como categorizar imagens, transcrever pequenos trechos de áudio ou validar dados de endereços. Não paga fortunas, mas é uma ótima forma de aproveitar o tempo no ônibus ou em salas de espera.</p>
+                <p>Já os sites de pesquisas, como Google Opinion Rewards e ySense, pagam pela sua opinião como consumidor. O segredo aqui é o volume e a honestidade. As empresas filtram usuários que respondem qualquer coisa apenas para terminar rápido. Se você for consistente e fornecer dados úteis, as plataformas enviarão pesquisas cada vez mais lucrativas para o seu perfil. É uma renda incremental que pode ajudar a pagar assinaturas mensais ou pequenas despesas.</p>
+                <p>O cuidado aqui é com golpes. Nunca pague para trabalhar. Sites legítimos de microtarefas nunca pedirão "taxas de inscrição". Use esse modelo como um complemento, nunca como sua fonte principal, pois o valor por hora trabalhada costuma ser mais baixo do que a prestação de serviços especializados ou vendas.</p>`
             },
             {
-                title: "Plano Prático de 30 Dias",
-                img: "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80",
-                text: "<p>Semana 1: Cadastro e Portfólio. Semana 2: Propostas. Semana 3: Execução. Semana 4: Otimização. Siga o método sem pular etapas.</p>"
+                title: "Plano de Execução: Os Primeiros 30 Dias",
+                img: "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1000&q=80",
+                content: `<p>Saber o que fazer não adianta sem um plano de ação claro. Nos primeiros 7 dias, foque na preparação: limpe seus ativos, escolha sua modalidade principal e crie seus perfis nas plataformas. Não tente fazer as 9 formas de uma vez. Escolha uma única via para ser seu foco principal. Nos dias 8 a 14, comece a prospecção ativa. Envie pelo menos 3 propostas por dia ou anuncie 5 itens para venda. O objetivo aqui é o contato com o mercado.</p>
+                <p>Entre os dias 15 e 21, você deve focar na execução. Se conseguiu seu primeiro trabalho ou venda, entregue o dobro do esperado. Peça depoimentos e use-os para conseguir o próximo cliente. Nos últimos dias do mês (22 a 30), faça uma análise crítica: o que trouxe mais retorno pelo tempo investido? Onde você travou? Ajuste o curso e repita o processo para o mês seguinte com metas 20% maiores.</p>
+                <p>A organização financeira é o que mantém o negócio vivo. Não gaste sua renda extra com futilidades no início. Use esse dinheiro para reinvestir em ferramentas melhores, cursos de especialização ou para criar sua reserva de emergência. O objetivo da renda extra é te dar liberdade, não apenas mais consumo.</p>`
             },
             {
-                title: "Conclusão e Próximos Passos",
-                img: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80",
-                text: "<p>Agora você tem o mapa. A execução separa quem tem resultados de quem apenas consome informação. Comece hoje, pequeno, mas comece.</p>"
+                title: "Conclusão: O Caminho da Liberdade",
+                img: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1000&q=80",
+                content: `<p>Chegamos ao fim deste guia prático, mas este é apenas o começo da sua jornada. A liberdade financeira não é um evento que acontece da noite para o dia, mas sim um hábito construído através de pequenas decisões diárias. Ao aprender a gerar renda extra, você quebra a dependência de uma única fonte de receita e retoma o controle sobre seu tempo e seu futuro. A segurança real não vem de um emprego estável, mas da sua capacidade de gerar valor para o mercado.</p>
+                <p>Lembre-se: o conhecimento sem ação é apenas entretenimento. Você agora tem o mapa e as ferramentas. O mercado está cheio de oportunidades esperando por pessoas comprometidas, educadas e dispostas a trabalhar com seriedade. Não espere pelas condições perfeitas, pois elas não existem. Comece com o que você tem, onde você está e faça o melhor que puder hoje.</p>
+                <p>Desejamos muito sucesso na sua caminhada. Mantenha a ética acima de tudo, continue estudando e nunca subestime o poder de uma pequena semente plantada com consistência. Transforme suas horas vagas em ativos e sua vida nunca mais será a mesma. Vamos para cima!</p>`
             }
         ];
 
         let currentIdx = 0;
 
+        function init() {
+            renderMenu();
+            updateDisplay();
+        }
+
         function renderMenu() {
-            const menu = document.getElementById('menu');
-            menu.innerHTML = lessons.map((l, i) => `
-                <div class="nav-item ${i === currentIdx ? 'active' : ''}" onclick="changeLesson(${i})">
-                    <i class="fas fa-check-circle"></i> Aula ${i + 1}
+            const menu = document.getElementById('lesson-menu');
+            menu.innerHTML = courseData.map((lesson, i) => `
+                <div class="nav-item ${i === currentIdx ? 'active' : ''}" onclick="goToLesson(${i})">
+                    <i class="fas ${i < currentIdx ? 'fa-check-circle' : 'fa-circle-play'}"></i>
+                    Aula ${i + 1}: ${lesson.title.split(':')[0]}
                 </div>
             `).join('');
         }
 
-        function changeLesson(index) {
-            if (index < 0 || index >= lessons.length) return;
-            currentIdx = index;
+        function updateDisplay() {
+            const lesson = courseData[currentIdx];
+            document.getElementById('display-img').src = lesson.img;
+            document.getElementById('display-tag').innerText = `Módulo ${currentIdx + 1} de ${courseData.length}`;
+            document.getElementById('display-title').innerText = lesson.title;
+            document.getElementById('display-text').innerHTML = lesson.content;
+
+            // Buttons
+            document.getElementById('prev-btn').disabled = currentIdx === 0;
+            document.getElementById('next-btn').innerText = currentIdx === courseData.length - 1 ? "Concluir Curso" : "Próxima Aula";
             
-            const lesson = lessons[currentIdx];
-            document.getElementById('lesson-img').src = lesson.img;
-            document.getElementById('lesson-title').innerText = lesson.title;
-            document.getElementById('lesson-module').innerText = `MÓDULO ${currentIdx + 1}`;
-            document.getElementById('lesson-text').innerHTML = lesson.text;
-            
-            document.getElementById('btn-prev').disabled = currentIdx === 0;
-            document.getElementById('btn-next').innerText = currentIdx === lessons.length - 1 ? "Finalizar" : "Próxima Aula";
-            
+            // Progress
+            const progress = ((currentIdx + 1) / courseData.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+
             renderMenu();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Iniciar
-        changeLesson(0);
+        function moveLesson(step) {
+            const newIdx = currentIdx + step;
+            if (newIdx >= 0 && newIdx < courseData.length) {
+                currentIdx = newIdx;
+                updateDisplay();
+            } else if (newIdx === courseData.length) {
+                alert("Parabéns! Você concluiu o curso Renda Extra na Prática!");
+            }
+        }
+
+        function goToLesson(index) {
+            currentIdx = index;
+            updateDisplay();
+        }
+
+        init();
     </script>
 </body>
 </html>
