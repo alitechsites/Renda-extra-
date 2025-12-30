@@ -3,186 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-book: Renda Extra na Prática</title>
+    <title>Curso: Renda Extra na Prática</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
         :root {
-            --primary: #1a56db;
-            --secondary: #0f172a;
-            --accent: #059669;
-            --bg: #fdfdfd;
-            --text: #334155;
-            --light-grey: #f1f5f9;
+            --sidebar-width: 300px;
+            --primary: #2563eb;
+            --bg-body: #f1f5f9;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --border: #e2e8f0;
         }
 
-        /* Estilos Gerais */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Roboto', sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; }
-        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; }
 
-        /* Hero Section */
-        header { 
-            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), 
-                        url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 100px 0;
-            text-align: center;
+        /* --- Header / Barra Superior --- */
+        .top-nav {
+            height: 60px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
+        .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
+        .user-progress { font-size: 0.9rem; color: var(--text-muted); }
 
-        .hero-badge { background: var(--accent); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; margin-bottom: 20px; display: inline-block; }
-        h1 { font-size: 3rem; margin-bottom: 20px; line-height: 1.1; }
-        .subtitle { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto 30px; }
+        /* --- Layout Principal --- */
+        .main-wrapper { display: flex; flex: 1; }
 
-        .btn { 
-            display: inline-block; 
-            background: var(--accent); 
-            color: white; 
-            padding: 18px 40px; 
-            border-radius: 8px; 
-            font-weight: bold; 
+        /* --- Sidebar (Índice do Curso) --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--white);
+            border-right: 1px solid var(--border);
+            height: calc(100vh - 60px);
+            position: sticky;
+            top: 60px;
+            overflow-y: auto;
+            padding: 1.5rem 0;
+        }
+        .sidebar-title { padding: 0 1.5rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 1rem; }
+        .module-link { 
+            display: flex; 
+            align-items: center; 
+            padding: 0.75rem 1.5rem; 
             text-decoration: none; 
-            font-size: 1.1rem;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
+            color: var(--text-dark); 
+            font-size: 0.95rem; 
+            transition: 0.2s; 
+            border-left: 3px solid transparent;
         }
-        .btn:hover { transform: scale(1.05); background: #047857; }
+        .module-link:hover { background: #f8fafc; }
+        .module-link.active { background: #eff6ff; color: var(--primary); border-left-color: var(--primary); font-weight: 500; }
+        .module-link i { margin-right: 12px; font-size: 1rem; width: 20px; text-align: center; }
 
-        /* Seções do E-book */
-        .ebook-content { padding: 80px 0; }
-        .chapter { 
-            background: white; 
-            border-radius: 12px; 
-            padding: 40px; 
-            margin-bottom: 30px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border-left: 5px solid var(--primary);
-            transition: 0.3s;
+        /* --- Conteúdo da Aula --- */
+        .content { flex: 1; padding: 2rem; max-width: 900px; margin: 0 auto; }
+        .lesson-header { margin-bottom: 2rem; }
+        .lesson-header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .lesson-meta { color: var(--text-muted); font-size: 0.9rem; }
+
+        .video-placeholder {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            position: relative;
+            cursor: pointer;
         }
-        .chapter:hover { transform: translateX(10px); }
-        .chapter-number { color: var(--primary); font-weight: bold; font-size: 0.9rem; text-transform: uppercase; display: block; margin-bottom: 10px; }
-        .chapter h2 { font-size: 1.5rem; margin-bottom: 15px; color: var(--secondary); }
-        
-        /* Imagens Temáticas Intercaladas */
-        .section-img { width: 100%; height: 400px; object-fit: cover; border-radius: 15px; margin: 40px 0; }
+        .play-btn { font-size: 4rem; color: white; opacity: 0.8; transition: 0.3s; }
+        .video-placeholder:hover .play-btn { transform: scale(1.1); opacity: 1; }
 
-        /* Lista de Benefícios */
-        .checklist { list-style: none; margin-top: 15px; }
-        .checklist li { margin-bottom: 10px; display: flex; align-items: center; }
-        .checklist li i { color: var(--accent); margin-right: 10px; }
+        .article-body { background: var(--white); padding: 2.5rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); line-height: 1.8; }
+        .article-body h2 { margin: 2rem 0 1rem; font-size: 1.5rem; }
+        .article-body p { margin-bottom: 1.2rem; font-size: 1.1rem; }
 
-        /* Footer */
-        footer { background: var(--secondary); color: white; padding: 60px 0; text-align: center; }
-        .footer-cta { margin-bottom: 30px; }
+        /* --- Navegação de Aula --- */
+        .lesson-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .nav-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .prev { color: var(--text-dark); border: 1px solid var(--border); }
+        .next { background: var(--primary); color: white; }
+        .next:hover { opacity: 0.9; }
 
-        /* Responsividade */
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .chapter { padding: 25px; }
-            .section-img { height: 250px; }
+        /* --- Responsividade --- */
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .top-nav { padding: 0 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <span class="hero-badge">GUIA COMPLETO EM 10 PASSOS</span>
-            <h1>Renda Extra na Prática</h1>
-            <p class="subtitle">Como gerar dinheiro de forma honesta, acessível e gradual, mesmo sem experiência e começando do absoluto zero.</p>
-            <a href="#começar" class="btn"><i class="fas fa-download"></i> QUERO O E-BOOK COMPLETO</a>
+    <nav class="top-nav">
+        <div class="logo">RENDA EXTRA <span style="font-weight: 300;">PRO</span></div>
+        <div class="user-progress">
+            <i class="fas fa-tasks"></i> Módulo 1 de 10 concluído
         </div>
-    </header>
+    </nav>
 
-    <section class="ebook-content" id="começar">
-        <div class="container">
-            
-            <div class="chapter">
-                <span class="chapter-number">Parte 01</span>
-                <h2>Mentalidade: O Dinheiro é uma Troca de Valor</h2>
-                <p>O mercado paga por solução de problemas. Se você resolve o problema de alguém, você será remunerado. Esqueça a sorte; foque na utilidade e no valor que você entrega ao mundo.</p>
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <p class="sidebar-title">Conteúdo do Curso</p>
+            <a href="#" class="module-link active"><i class="fas fa-play-circle"></i> 01. Mentalidade Correta</a>
+            <a href="#" class="module-link"><i class="fas fa-lock"></i> 02. Expectativa x Realidade</a>
+            <a href="#" class="module-link"><i class="fas fa-lock"></i> 03. Identificando Ativos</a>
+            <a href="#" class="module-link"><i class="fas fa-lock"></i> 04. Freelancer Digital</a>
+            <a href="#" class="module-link"><i class="fas fa-lock"></i> 05. Desapego Lucrativo</a>
+            <a href="#" class="module-link"><i class="fas fa-lock"></i> 06. Serviços Locais</a>
+            <a href="#" class="module-link"><i class="fas fa-lock"></i> 07. Mercado de Afiliados</a>
+            <a href="#" class="module-link"><i class="fas fa-lock"></i> 08. Microtarefas Online</a>
+            <a href="#" class="module-link"><i class="fas fa-lock"></i> 09. Plano de 30 Dias</a>
+            <a href="#" class="module-link"><i class="fas fa-lock"></i> 10. Próximos Passos</a>
+        </aside>
+
+        <main class="content">
+            <div class="lesson-header">
+                <span style="color: var(--primary); font-weight: 600; font-size: 0.8rem;">MÓDULO 01</span>
+                <h1>Mentalidade: O Dinheiro é uma Troca de Valor</h1>
+                <div class="lesson-meta">Tempo estimado: 12 min • Nível: Iniciante</div>
             </div>
 
-            <div class="chapter">
-                <span class="chapter-number">Parte 02</span>
-                <h2>Expectativa x Realidade: O Jogo do Longo Prazo</h2>
-                <p>Renda extra é uma construção. No início, você paga uma conta pequena. Com consistência, ela se torna uma reserva financeira sólida.</p>
-                <ul class="checklist">
-                    <li><i class="fas fa-check-circle"></i> Mês 1: Aprendizado e primeiros ganhos.</li>
-                    <li><i class="fas fa-check-circle"></i> Mês 6: Fonte sólida de receita mensal.</li>
-                </ul>
+            <div class="video-placeholder">
+                <i class="fas fa-play-circle play-btn"></i>
             </div>
 
-            <img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=1000&q=80" alt="Finanças e Organização" class="section-img">
+            <article class="article-body">
+                <h2>O que você aprenderá nesta aula?</h2>
+                <p>Nesta primeira aula do nosso treinamento, vamos desconstruir a ideia de que o dinheiro "cai do céu". Para gerar renda extra de forma consistente, você precisa entender a psicologia do mercado.</p>
+                
+                <p><strong>Conceito Chave:</strong> O mercado não paga pelo seu tempo, ele paga pelo <strong>valor</strong> que você entrega. Se você gasta 10 horas fazendo algo que ninguém precisa, seu lucro será zero. Se você gasta 10 minutos resolvendo um problema crítico de alguém, você pode cobrar caro por isso.</p>
 
-            <div class="chapter">
-                <span class="chapter-number">Parte 03</span>
-                <h2>Identificando seu Ativo (O que você já tem?)</h2>
-                <p>Você não precisa de um diploma novo. Liste o que você já sabe: Escrita, outro idioma, organização ou domínio de redes sociais.</p>
+                <blockquote style="border-left: 4px solid var(--primary); padding-left: 20px; font-style: italic; color: var(--text-muted); margin: 2rem 0;">
+                    "Renda extra não é sobre sorte. É sobre identificar uma necessidade e se posicionar como a solução."
+                </blockquote>
+
+                <h2>A Mudança de Chave</h2>
+                <p>A partir de agora, pare de se perguntar: "Como posso ganhar dinheiro?". <br>
+                   Comece a se perguntar: <strong>"Quem eu posso ajudar hoje e qual problema eu sei resolver?"</strong>.</p>
+                
+                <p>Ao longo deste curso, vamos passar por 9 formas práticas de aplicar essa mentalidade. Prepare seu papel e caneta, e vamos para a próxima lição.</p>
+            </article>
+
+            <div class="lesson-footer">
+                <a href="#" class="nav-btn prev">Voltar</a>
+                <a href="#" class="nav-btn next">Próxima Aula <i class="fas fa-arrow-right"></i></a>
             </div>
+        </main>
+    </div>
 
-            <div class="chapter">
-                <span class="chapter-number">Parte 04</span>
-                <h2>Freelancer Digital: Onde o Mundo Contrata</h2>
-                <p>Conecte-se com quem precisa de ajuda através de plataformas como <strong>Workana, Fiverr e Upwork</strong>. O mercado global está a um clique de distância.</p>
-            </div>
-
-            <div class="chapter">
-                <span class="chapter-number">Parte 05</span>
-                <h2>A Arte de Vender o que está Parado</h2>
-                <p>O método mais rápido para levantar dinheiro em 24h. Tire fotos excelentes e use o Facebook Marketplace, OLX e Enjoei para girar itens que você não usa mais.</p>
-            </div>
-
-            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80" alt="Tecnologia e Trabalho Remoto" class="section-img">
-
-            <div class="chapter">
-                <span class="chapter-number">Parte 06</span>
-                <h2>Prestação de Serviços Locais</h2>
-                <p>Olhe ao seu redor. Vizinhos precisam de Dog Walkers, organizadores e criadores de conteúdo para comércios locais. A oportunidade está na sua rua.</p>
-            </div>
-
-            <div class="chapter">
-                <span class="chapter-number">Parte 07</span>
-                <h2>Afiliados: Recomendação Lucrativa</h2>
-                <p>Indique produtos que você confia e ganhe comissões. É o modelo de representante comercial adaptado para a era digital.</p>
-            </div>
-
-            <div class="chapter">
-                <span class="chapter-number">Parte 08</span>
-                <h2>Microtarefas e Testes de Apps</h2>
-                <p>Use seu tempo livre para testar sites ou responder pesquisas em plataformas como UserTesting e Google Opinion Rewards.</p>
-            </div>
-
-            <div class="chapter">
-                <span class="chapter-number">Parte 09</span>
-                <h2>O Plano de 30 Dias: Do Cadastro ao Saque</h2>
-                <p>Foco na execução: Semana 1 (Cadastro), Semana 2 (Propostas), Semana 3 (Trabalho), Semana 4 (Recebimento).</p>
-            </div>
-
-            <div class="chapter" style="background: #eff6ff; border-left-color: var(--accent);">
-                <span class="chapter-number">Parte 10</span>
-                <h2>Conclusão: O Próximo Passo</h2>
-                <p>A diferença entre quem tem resultados e quem apenas sonha é a <strong>execução</strong>. Escolha uma modalidade e comece hoje mesmo.</p>
-            </div>
-
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-cta">
-                <h2>Transforme seu tempo em liberdade financeira.</h2>
-                <p style="margin: 20px 0;">Baixe agora a versão completa em PDF para ler onde quiser.</p>
-                <a href="#" class="btn" style="background: white; color: var(--secondary);">BAIXAR PDF AGORA</a>
-            </div>
-            <p style="font-size: 0.8rem; opacity: 0.6;">&copy; 2024 Renda Extra na Prática. Todos os direitos reservados.</p>
-        </div>
-    </footer>
+    <script>
+        // Este script pode ser usado para marcar aulas como lidas ou trocar de conteúdo
+        console.log("Plataforma de curso carregada com sucesso.");
+    </script>
 
 </body>
 </html>
